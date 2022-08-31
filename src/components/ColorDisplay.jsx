@@ -4,17 +4,17 @@ import { Interweave } from 'interweave';
 
 const ColorDisplay = (props) => {
 
-    const boxes = [];
-    for (let i = 0; i < props.colors.length; i++){
-        boxes.push(`<div style="background-color:${props.colors[i]}; width: ${props.sizes[i]}px; height: ${props.sizes[i]}px;"></div>`)
-    }
-    const boxesString = boxes.join("");
+    // const boxes = [];
+    // for (let i = 0; i < props.colors.length; i++){
+    //     boxes.push(`<div style="background-color:${color}; width: ${props.sizes[props.colors.indexOf(color)]}px; height: ${props.sizes[props.colors.indexOf(color)]}px;"></div>`)
+    // }
+    const boxes = props.colors.map((color, index)=>`<div style="background-color:${color}; width: ${props.sizes[index]}px; height: ${props.sizes[index]}px;"></div>`).join("")
 
     return (
         <>
             <h1>Colors</h1>
            
-            <Interweave content={boxesString} className={styles.container}/>
+            <Interweave content={boxes} className={styles.container}/>
            
         </>
     );
