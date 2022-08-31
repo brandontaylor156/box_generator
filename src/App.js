@@ -1,25 +1,32 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import ColorForm from './components/ColorForm';
+import ColorDisplay from './components/ColorDisplay';
 import './App.css';
-
+    
 function App() {
+  const colorsArray = []
+  const sizeArray = []
+
+  const [colors, setColors] = useState(colorsArray);
+  const [sizes, setSizes] = useState(sizeArray);
+  
+  const addColor = ( newColor ) => {
+      setColors(colors.concat(newColor));
+  }
+
+  const addSize = ( newSize ) => {
+      setSizes(sizes.concat(newSize));
+  }
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <>
+          <ColorForm onNewColor={ addColor } onNewSize={ addSize }/>
+          <ColorDisplay colors={ colors } sizes={sizes}/>
+      </>
   );
 }
+  
 
+    
 export default App;
+
