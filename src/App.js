@@ -1,29 +1,72 @@
 import React, { useState } from 'react';
-import ColorForm from './components/ColorForm';
-import ColorDisplay from './components/ColorDisplay';
+import Color from './components/Color';
+import styles from './components/ColorDisplay.module.css';
 import './App.css';
     
 function App() {
-  const colorsArray = []
-  const sizeArray = []
-
-  const [colors, setColors] = useState(colorsArray);
-  const [sizes, setSizes] = useState(sizeArray);
+  const [newColor, setNewColor] = useState("");
+  const [newSize, setNewSize] = useState(1);
+  const [boxes, setBoxes] = useState([]);
   
-  const addColor = ( newColor ) => {
-      setColors(colors.concat(newColor));
-  }
+  const handleNewBox = (event) => {
+    event.preventDefault();
 
-  const addSize = ( newSize ) => {
-      setSizes(sizes.concat(newSize));
-  }
+    if (newColor.length === 0){
+      return;
+    }
+
+    const boxItem = {
+      color: newColor,
+      size: newSize
+    }
+
+    setBoxes([...boxes, boxItem])
+    setNewColor("")
+    setNewSize(1)
+}
   
-  return (
-      <>
-          <ColorForm onNewColor={ addColor } onNewSize={ addSize }/>
-          <ColorDisplay colors={ colors } sizes={sizes}/>
-      </>
-  );
+return (
+      <div>
+          <form onSubmit={(event) => {handleNewBox(event);}}>
+
+          <div>
+            <label>Color: </label>
+            <input
+              onChange={(event) => {setNewColor(event.target.value)}}
+              type="text"
+              value={newColor}
+            />
+          </div>
+          <div>
+            <label>Size in Pixels: </label>
+            <input
+              onChange={(event) => {setNewSize(event.target.value)}}
+              type="number"
+              min="1"
+              value={newSize}
+            />
+          </div>
+          <div>
+            <button>Add</button>
+          </div>
+        </form>
+
+       <div className={styles.container}>
+        {
+          boxes.map((box, index) =>  {
+
+            return (
+              <Color 
+                key={index} 
+                box={box}  
+              />
+            )
+          }
+                  )
+        }
+        </div>
+      </div>
+);
 }
   
 
